@@ -1,0 +1,66 @@
+\documentclass[conference]{IEEEtran}
+
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+    
+\usepackage{lipsum}
+
+\usepackage{listings}
+\lstset{
+    basicstyle=\scriptsize \ttfamily ,
+	escapeinside=``,
+	linewidth=\textwidth,
+	numbers=left,
+	numberstyle=\footnotesize  \ttfamily \color{blue},
+	%frame=trbl,
+	breaklines=true,
+	aboveskip=1em,
+	framextopmargin=2pt,framexbottommargin=2pt,abovecaptionskip=-3pt,belowcaptionskip=3pt,
+} %Required for inserting code
+
+\def\figurewidth{0.45\textwidth}
+\graphicspath{{figure/}}
+\usepackage[hidelinks]{hyperref}
+
+\usepackage{caption}
+\usepackage{subcaption}
+
+
+\begin{document}
+
+\title{Report: Experiment on Cloud Computing \thanks{This experiment was funded by the course of Cloud Computing and Huawei's Collegiate Education Program "Zhineng Jizuo".}}
+
+\author{\IEEEauthorblockN{Victrid}
+\IEEEauthorblockA{\textit{dept. of Computer Science and Engineering} \\
+\textit{Shanghai Jiao Tong University}\\
+Shanghai, China \\
+\href{https://github.com/Victrid}{github.com/Victrid}}
+}
+
+\maketitle
+
+\input{intro}
+
+\input{config}
+
+\input{wordcount}
+
+\input{connected}
+
+\input{pagerank}
+
+\input{conclusion}
+
+\vfill
+\bibliographystyle{IEEEtran}
+\bibliography{reference}
+
+\input{complement}
+
+\end{document}

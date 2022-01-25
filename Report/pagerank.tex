@@ -1,0 +1,77 @@
+\section{PageRank Algorithm}
+
+Here we use the Wikipedia Vote Network dataset \cite{wikipedia} as our processing source. The requested PageRank algorithm is similar to the \emph{Connected Component} one, and after checking the spark source code, we're sure that the \texttt{GraphLoader} can also be used to process the wiki votes.
+
+PageRank algorithm is named after both the term "web page" and Google co-founder Larry Page. The key to the ranking is a probabilistic balance between nodes. At the beginning of the computational process the pagerank for each node is randomized, and for each iteration, the rank is computed as:
+
+\begin{equation}
+PR(p_i) =\frac{1-d}{N} + d\sum_{p_j\in M(p_i)}\frac{PR(p_j)}{L(p_j)}
+\end{equation}
+
+An approximation of real page rank value can be calculated with several iterations.
+
+After researching on GraphX Programming Guide \cite{pagerank}, the graph build with GraphLoader has implemented PageRank algorithm. In our implementation, it is called by
+
+\begin{verbatim}
+val ranksGraph = graph.pageRank(0.0001)
+\end{verbatim}
+
+The original source file does not contain name information, but we want to form a more intuitive result as \emph{Connected Component}, which adds an additional user--node linkage. We used \texttt{sed} scripts to pre-process the original vote data from \cite{wiki-elec}, and generate the user--node list as in \texttt{users.txt}.
+
+{\small
+\begin{verbatim}
+sed '/^[\s]*#/d; 
+/^\s*$/d;
+/^[ET].*/d; 
+/^N\t-1\tUNKNOWN.*/d;
+s/^[UN]\t\(.*\)\t\(.*\)$/\1,\2/g;
+s/^V\t.*\t\(.*\)\t.*\t\(.*\)$/\1,\2/g' \
+original.txt | sort -g | uniq > users.txt
+\end{verbatim}
+}
+
+The user--node list generated would be like:
+
+{\small
+\begin{verbatim}
+3,ludraman
+4,gzornenplatz
+5,orthogonal
+6,andrevan
+7,texture
+8,lst27
+9,mirv
+...
+\end{verbatim}
+}
+
+After compiling and submitting like we've done in the \emph{Connected Component} part, the results are shown below and as figure \ref{fig:PR-result}:
+
+{\small
+\begin{verbatim}
+PR: 32.78, ID:4037, Name:elonka
+PR: 26.18, ID:  15, Name:danny
+PR: 25.52, ID:6634, Name:tenpoundhammer
+PR: 23.36, ID:2625, Name:_clown_will_eat_me
+PR: 18.56, ID:2398, Name:werdna
+PR: 17.96, ID:2470, Name:alex_bakharev
+PR: 17.76, ID:2237, Name:khoikhoi
+PR: 16.14, ID:4191, Name:ryulong
+PR: 15.44, ID:7553, Name:dihydrogen_monoxide
+PR: 15.30, ID:5254, Name:gracenotes
+PR: 14.51, ID:2328, Name:phaedriel
+PR: 14.48, ID:1186, Name:william_m._connolley
+PR: 13.84, ID:1297, Name:robchurch
+PR: 13.78, ID:4335, Name:mer-c
+PR: 13.75, ID:7620, Name:cobi
+PR: 13.65, ID:5412, Name:protectionbot
+PR: 13.57, ID:7632, Name:redirectcleanupbot
+PR: 13.33, ID:4875, Name:earle_martin
+PR: 12.87, ID:6946, Name:useight
+PR: 12.69, ID:3352, Name:crzrussian
+\end{verbatim}
+}
+
+Although we do not know how Wikipedia administrators are selected, after checking their usernames, those we checked were all engaged in Wikipedia administration during 2008. This shows that distributed computing is not just an airy idea in papers or academics, but can also work well in solving practical problems.
+
+All necessary files and source code are put in the \texttt{PageRank} folder.

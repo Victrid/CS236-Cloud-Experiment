@@ -1,0 +1,28 @@
+\section{GraphicX Example: Connected Component}
+
+We've copied the needed file and organized as \cite{xmu-spark}. The package needs more dependencies than WordCount program, and the scala used by Spark 3.2.0 should be 2.12.15. We modified the simple build tools script as below:
+
+\begin{verbatim}
+#    [Trailed for PDF typesetting]
+scalaVersion := "2.12.15"
+
+libraryDependencies+="org.apache.spark" \
+    %% "spark-core" % "3.2.0"
+libraryDependencies+="org.apache.spark" \
+    %% "spark-sql" % "3.2.0"
+libraryDependencies+="org.apache.spark" \ 
+    %% "spark-graphx" % "3.2.0"
+\end{verbatim}
+
+After compiling as in figure \ref{fig:compile}, we upload these 2 graph txt files to data/graphx folder on HDFS, and call the class by \texttt{org.\allowbreak{}apache.\allowbreak{}spark.\allowbreak{}examples.\allowbreak{}graphx.\allowbreak{}ConnectedComponentsExample} as in figure \ref{fig:spark-submit} and received the result as in figure \ref{fig:spark-result}:
+
+\begin{verbatim}
+(justinbieber,1)
+(matei_zaharia,3)
+(ladygaga,1)
+(BarackObama,1)
+(jeresig,3)
+(odersky,3)
+\end{verbatim}
+
+The necessary files and source code are put in the \texttt{GraphX} folder.
